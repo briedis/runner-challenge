@@ -27,7 +27,7 @@ $findUsers = function (TeamModel $team, ?bool $isParticipating) use (&$users) {
 $v->layout('layout', ['title' => 'Admin']);
 ?>
 <div class="row">
-    <div class="col">
+    <div class="col-lg-8">
         <div class="card mb-3">
             <div class="card-header">
                 Teams
@@ -106,7 +106,7 @@ $v->layout('layout', ['title' => 'Admin']);
         </div>
     </div>
 
-    <div class="col-3">
+    <div class="col-lg-4">
         <div class="card <?= ($canUpload ? 'bg-success' : 'bg-danger'); ?> text-white mb-3">
             <div class="card-header">Activity upload</div>
             <div class="card-body">

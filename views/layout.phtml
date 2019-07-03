@@ -26,7 +26,7 @@ use App\Models\UserModel;
 <div class="container pt-2">
     <?php if ($user) { ?>
         <div class="row">
-            <div class="col">
+            <div class="col-lg-12">
                 <div class="d-flex">
                     <div class="mr-3 mt-2 mb-1">
                         <a href="<?= route('board'); ?>" class="text-decoration-none">
@@ -55,14 +55,14 @@ use App\Models\UserModel;
 
     <?php if ($_flash) { ?>
         <div class="row">
-            <div class="col">
+            <div class="col-lg-12">
                 <p class="alert alert-info"><?= $_flash; ?></p>
             </div>
         </div>
     <?php } ?>
 
     <div class="row">
-        <div class="col"><?= $v->section('content') ?></div>
+        <div class="col-lg-12"><?= $v->section('content') ?></div>
     </div>
 </div>
 
