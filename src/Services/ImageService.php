@@ -72,7 +72,7 @@ class ImageService
         $model = $this->createEntry($extension, $targetDirectory);
 
         try {
-            $this->resizeAndSave($model, $image);
+            $this->preprocessAndSave($model, $image);
         } catch (FileExistsException $e) {
             throw new InvalidArgumentException('Image saving failed');
         }
@@ -85,8 +85,9 @@ class ImageService
      * @param Image $image
      * @throws FileExistsException
      */
-    private function resizeAndSave(ImageModel $model, Image $image)
+    private function preprocessAndSave(ImageModel $model, Image $image)
     {
+        $image = $image->orientate();
         $image->backup();
 
         $constraint = function (Constraint $constraint) {
