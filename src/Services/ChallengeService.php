@@ -12,7 +12,7 @@ class ChallengeService
      */
     public function getCurrent(): ?ChallengeModel
     {
-        return $this->getById(6);
+        return $this->getById(7);
     }
 
     public function getById(int $challengeId): ?ChallengeModel
@@ -68,6 +68,12 @@ class ChallengeService
         $challenge->id = 6;
         $challenge->openFrom = Carbon::createFromDate(2020, 5, 17, 'Europe/Riga')->setTime(0, 0, 0);
         $challenge->openUntil = Carbon::createFromDate(2020, 6, 7, 'Europe/Riga')->setTime(23, 59, 59);
+        $all[] = $challenge;
+
+        $challenge = new ChallengeModel();
+        $challenge->id = 7;
+        $challenge->openFrom = Carbon::createFromDate(2020, 9, 18, 'Europe/Riga')->setTime(0, 0, 0);
+        $challenge->openUntil = Carbon::createFromDate(2020, 10, 9, 'Europe/Riga')->setTime(23, 59, 59);
         $all[] = $challenge;
 
         return $all;
