@@ -33,6 +33,8 @@ class Bootstrap
         ini_set('date.timezone', 'America/Los_Angeles');
 
         ini_set('session.gc_maxlifetime', 30 * 24 * 3600);
+        ini_set('session.name', 'challenge_us');
+
         session_set_cookie_params(30 * 24 * 3600);
         session_start();
 
