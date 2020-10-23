@@ -12,7 +12,7 @@ class ChallengeService
      */
     public function getCurrent(): ?ChallengeModel
     {
-        return $this->getById(8);
+        return $this->getById(1);
     }
 
     public function getById(int $challengeId): ?ChallengeModel
