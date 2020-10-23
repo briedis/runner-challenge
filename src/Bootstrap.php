@@ -30,7 +30,7 @@ class Bootstrap
 
         $this->registerErrorHandlers();
 
-        ini_set('date.timezone', 'Europe/Riga');
+        ini_set('date.timezone', 'America/Los_Angeles');
 
         ini_set('session.gc_maxlifetime', 30 * 24 * 3600);
         session_set_cookie_params(30 * 24 * 3600);
