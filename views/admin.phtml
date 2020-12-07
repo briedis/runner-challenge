@@ -174,9 +174,10 @@ $v->layout('layout', ['title' => 'Admin']);
                             <?php } ?>
                         </ul>
                         <select name="teamId" class="custom-select custom-select-sm mt-2">
-                            <option value="0">-- Select a team --</option>
+                            <option value="0">-- Select a team or action --</option>
+                            <option value="-1">Set as not participating</option>
                             <?php foreach ($teams as $team) { ?>
-                                <option value="<?= $team->id; ?>"><?= htmlspecialchars($team->name); ?></option>
+                                <option value="<?= $team->id; ?>">Add to "<?= htmlspecialchars($team->name); ?>"</option>
                             <?php } ?>
                         </select>
                         <button type="submit" class="btn btn-primary btn-sm btn-block mt-2">Assign to a team

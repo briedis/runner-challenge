@@ -18,25 +18,34 @@ class Controller extends BaseController
 
     public function board()
     {
-        return $this->render('my-activities', [
-            'activities' => $this->activities->getActivities($this->challenge, $this->user),
-        ]);
+        return $this->render(
+            'my-activities',
+            [
+                'activities' => $this->activities->getActivities($this->challenge, $this->user),
+            ]
+        );
     }
 
     public function rules()
     {
-        return $this->render('rules', [
-            'rules' => (new TextService)->getRulesHtml(),
-        ]);
+        return $this->render(
+            'rules',
+            [
+                'rules' => (new TextService())->getRulesHtml(),
+            ]
+        );
     }
 
     public function myTeam()
     {
-        return $this->render('my-team', [
-            'team' => $this->team,
-            'totals' => $this->team ? $this->teams->getUserLeaderboard($this->challenge, $this->team) : [],
-            'people' => $this->team ? $this->users->findByTeamId($this->team->id) : [],
-        ]);
+        return $this->render(
+            'my-team',
+            [
+                'team' => $this->team,
+                'totals' => $this->team ? $this->teams->getUserLeaderboard($this->challenge, $this->team) : [],
+                'people' => $this->team ? $this->users->findByTeamId($this->team->id) : [],
+            ]
+        );
     }
 
     public function participate()
@@ -140,7 +149,7 @@ class Controller extends BaseController
     public function image()
     {
         $imageId = $_GET['id'] ?? 0;
-        $content = (new ImageService)->getImageContent($imageId);
+        $content = (new ImageService())->getImageContent($imageId);
 
         header('Cache-Control: public, max-age=31536000');
         header('Content-Type: image/png');
@@ -167,10 +176,13 @@ class Controller extends BaseController
         }
 
         if (!$email || !$password) {
-            return $this->render('login', [
-                'resetKey' => $resetKey,
-                'email' => $user ? $user->email : '',
-            ]);
+            return $this->render(
+                'login',
+                [
+                    'resetKey' => $resetKey,
+                    'email' => $user ? $user->email : '',
+                ]
+            );
         }
 
         if ($user) {
@@ -198,16 +210,22 @@ class Controller extends BaseController
 
     public function leaderboardTeams()
     {
-        return $this->render('leaderboard-teams', [
-            'totals' => $this->teams->getTeamLeaderboard($this->challenge),
-        ]);
+        return $this->render(
+            'leaderboard-teams',
+            [
+                'totals' => $this->teams->getTeamLeaderboard($this->challenge),
+            ]
+        );
     }
 
     public function leaderboardPeople()
     {
-        return $this->render('leaderboard-people', [
-            'totals' => $this->teams->getUserLeaderboard($this->challenge),
-        ]);
+        return $this->render(
+            'leaderboard-people',
+            [
+                'totals' => $this->teams->getUserLeaderboard($this->challenge),
+            ]
+        );
     }
 
     public function logout()
@@ -218,13 +236,16 @@ class Controller extends BaseController
 
     public function admin()
     {
-        return $this->render('admin', [
-            'canUpload' => $this->activities->canUpload(null),
-            'teams' => $this->challenge ? $this->teams->getAll($this->challenge) : [],
-            'users' => $this->users->getAll(),
-            'rules' => (new TextService)->getRules(),
-            'challenge' => $this->challenge,
-        ]);
+        return $this->render(
+            'admin',
+            [
+                'canUpload' => $this->activities->canUpload(null),
+                'teams' => $this->challenge ? $this->teams->getAll($this->challenge) : [],
+                'users' => $this->users->getAll(),
+                'rules' => (new TextService())->getRules(),
+                'challenge' => $this->challenge,
+            ]
+        );
     }
 
     public function addTeam()
@@ -235,8 +256,17 @@ class Controller extends BaseController
 
     public function assignTeam()
     {
-        $team = $this->teams->getById($_POST['teamId']);
+        $teamId = (int)$_POST['teamId'];
+
+        $team = $this->teams->getById($teamId);
         $users = $this->users->findByIds($_POST['userIds'] ?? []);
+
+        if ($teamId === -1) {
+            foreach ($users as $user) {
+                (new UserService())->setParticipating($this->challenge, $user->id, false);
+            }
+            return $this->redirect('admin', 'People have been set as NOT participating.');
+        }
 
         if (!$team) {
             $this->redirect('admin', 'Team was not found');
@@ -275,7 +305,7 @@ class Controller extends BaseController
 
     public function editRules()
     {
-        (new TextService)->setRules($_POST['html'] ?? '');
+        (new TextService())->setRules($_POST['html'] ?? '');
         return $this->redirect('admin', 'Rules saved');
     }
 
@@ -283,7 +313,7 @@ class Controller extends BaseController
     {
         try {
             foreach ($_POST['userIds'] as $userId) {
-                (new UserService)->setParticipating($this->challenge, $userId, (bool)$_POST['isParticipating']);
+                (new UserService())->setParticipating($this->challenge, $userId, (bool)$_POST['isParticipating']);
             }
         } catch (InvalidArgumentException $e) {
             return $this->redirect('admin', $e->getMessage());
@@ -294,14 +324,14 @@ class Controller extends BaseController
 
     public function resetPassword()
     {
-        $newPassword = (new UserService)->resetPassword($_POST['userId']);
+        $newPassword = (new UserService())->resetPassword($_POST['userId']);
 
         return $this->redirect('admin', 'URL to reset password: <code>' . $newPassword . '</code>');
     }
 
     public function announcement()
     {
-        $result = (new MessageService)->send($_POST['message']);
+        $result = (new MessageService())->send($_POST['message']);
         return $this->redirect('admin', $result ? 'Announcement sent!' : 'Failed to send the message!');
     }
 
