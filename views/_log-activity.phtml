@@ -21,7 +21,7 @@ use App\Services\Storage;
         <div class="card-header text-danger">Challenge has not started yet</div>
         <div class="card-body">
             <p>
-                Starts: <strong><?= $challenge->openFrom->format('d.m.Y H:i T'); ?></strong>
+                Starts: <strong><?= $challenge->openFrom->format('F jS, Y, g:i a'); ?></strong>
             </p>
             <form method="post" action="<?= route('participate'); ?>">
                 <?php if ($user->isParticipating) { ?>
