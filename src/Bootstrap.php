@@ -19,8 +19,7 @@ use Whoops\Run;
 
 class Bootstrap
 {
-    /** @var UrlGenerator */
-    public static $routeGenerator;
+    public static UrlGenerator $routeGenerator;
 
     public function run()
     {
@@ -64,7 +63,7 @@ class Bootstrap
 
         R::setup('sqlite:' . __DIR__ . '/../storage/database.sqlite');
 
-        return (new Controller)->call($parameters);
+        return (new Controller())->call($parameters);
     }
 
     private function loadEnv()
@@ -88,7 +87,7 @@ class Bootstrap
 
         if (getenv('DEBUG') === 'true') {
             ini_set('display_errors', 1);
-            (new Run)->appendHandler(new PrettyPageHandler)->register();
+            (new Run())->appendHandler(new PrettyPageHandler())->register();
         } else {
             ini_set('display_errors', 0);
         }
