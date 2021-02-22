@@ -32,6 +32,13 @@ class Bootstrap
 
         ini_set('date.timezone', 'Europe/Riga');
 
+        $sessionPath = realpath(__DIR__ . '/../storage/sessions');
+
+        if (!is_dir($sessionPath)) {
+            die("Session directory missing");
+        }
+
+        ini_set('session.save_path', $sessionPath);
         ini_set('session.gc_maxlifetime', 30 * 24 * 3600);
         session_set_cookie_params(30 * 24 * 3600);
         session_start();
