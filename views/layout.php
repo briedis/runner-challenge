@@ -19,7 +19,7 @@ use App\Models\UserModel;
 
     <script src="<?= asset('autosize.min.js'); ?>"></script>
 
-    <title><?= $v($title); ?></title>
+    <title><?= $title; ?></title>
 </head>
 <body>
 
@@ -62,7 +62,7 @@ use App\Models\UserModel;
     <?php } ?>
 
     <div class="row">
-        <div class="col-lg-12"><?= $v->section('content') ?></div>
+        <div class="col-lg-12"><?= $this->section('content') ?></div>
     </div>
 </div>
 

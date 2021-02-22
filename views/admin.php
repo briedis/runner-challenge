@@ -34,7 +34,7 @@ $findUsers = function (?TeamModel $team, ?bool $isParticipating) use ($users, $c
     });
 };
 
-$v->layout('layout', ['title' => 'Admin']);
+$this->layout('layout', ['title' => 'Admin'] + $this->data);
 ?>
 <div class="row">
     <div class="col-lg-8">
@@ -141,7 +141,7 @@ $v->layout('layout', ['title' => 'Admin']);
             </div>
         </div>
 
-        <?php $v->insert('admin/_announcement'); ?>
+        <?php $this->insert('admin/_announcement'); ?>
 
         <div class="card mb-3">
             <?php

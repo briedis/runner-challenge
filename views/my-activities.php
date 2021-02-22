@@ -2,8 +2,9 @@
 
 use App\Models\ActivityModel;
 
-$v->layout('dashboard', ['title' => 'My Activities']);
-$v->push('card');
+
+$this->layout('dashboard', ['title' => 'My Activities'] + $this->data);
+$this->push('card');
 
 /**
  * @var ActivityModel[] $activities
@@ -60,4 +61,4 @@ if ($activities) { ?>
     <p class="card-text">When you log an activity, it will show up here!</p>
     <?php
 }
-$v->end();
+$this->end();

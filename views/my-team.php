@@ -4,8 +4,8 @@ use App\Models\TeamModel;
 use App\Models\TotalsModel;
 use App\Models\UserModel;
 
-$v->layout('dashboard', ['title' => 'My Team']);
-$v->push('card');
+$this->layout('dashboard', ['title' => 'My Team'] + $this->data);
+$this->push('card');
 
 /**
  * @var TeamModel|null $team
@@ -41,19 +41,19 @@ if ($team) { ?>
     <p class="card-text">You will be assigned to a team soon, don't worry!</p>
     <?php
 }
-$v->end();
+$this->end();
 
 if ($team) {
-    $v->push('after');
+    $this->push('after');
     ?>
     <div class="row mt-4">
         <div class="col-lg-8 mb-4">
-            <?php $v->insert('_team-profile', ['team' => $team]); ?>
+            <?php $this->insert('_team-profile', ['team' => $team]); ?>
         </div>
         <div class="col mb-4">
-            <?php $v->insert('_team-members', ['people' => $people]); ?>
+            <?php $this->insert('_team-members', ['people' => $people]); ?>
         </div>
     </div>
     <?php
-    $v->end();
+    $this->end();
 }

@@ -4,7 +4,7 @@
  * @var string $email
  */
 ?>
-<?php $v->layout('layout', ['title' => 'Register or Sign in']) ?>
+<?php $this->layout('layout', ['title' => 'Register or Sign in'] + $this->data) ?>
 
 <div class="row mt-5">
     <div class="col"></div>

@@ -2,8 +2,8 @@
 
 use App\Models\TotalsModel;
 
-$v->layout('dashboard', ['title' => 'People']);
-$v->push('card');
+$this->layout('dashboard', ['title' => 'Team Leaderboard'] + $this->data);
+$this->push('card');
 
 /**
  * @var TotalsModel[] $totals
@@ -15,7 +15,7 @@ $i = 0;
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th colspan="2" scope="col">Name</th>
+            <th colspan="2" scope="col">Team</th>
             <th scope="col">Distance</th>
             <th scope="col">Activities</th>
             <th scope="col">Last Activity</th>
@@ -32,13 +32,12 @@ $i = 0;
                         </a>
                     <?php } ?>
                 </td>
+                <td><?= htmlspecialchars($a->teamName); ?></td>
                 <td>
-                    <b><?= htmlspecialchars($a->userName); ?></b>
-                    <br>
-                    <span class="badge p-0"><?= htmlspecialchars($a->teamName); ?></span>
+                    <?= $a->getReadableDistance(); ?><br>
+                    <?= $a->getReadableDuration(); ?>
                 </td>
-                <td><?= $a->getReadableDistance(); ?></td>
-                <td class="text-center"><?= $a->activityCount; ?></td>
+                <td><?= $a->activityCount; ?></td>
                 <td><?= $a->getReadableLastActivityAt(); ?></td>
             </tr>
         <?php } ?>
@@ -46,4 +45,5 @@ $i = 0;
     </table>
 
 <?php
-$v->end();
+
+$this->end();

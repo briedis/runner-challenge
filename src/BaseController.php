@@ -87,7 +87,7 @@ abstract class BaseController
             'challenge' => $this->challenge,
         ];
 
-        $templates = Engine::create(ROOT . '/views');
+        $templates = new Engine(ROOT . '/views');
         return $templates->render(basename($view), $variables);
     }
 

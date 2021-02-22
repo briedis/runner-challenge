@@ -1,7 +1,7 @@
 <?php
 
-$v->layout('dashboard', ['title' => 'Rules']);
-$v->push('card');
+$this->layout('dashboard', ['title' => 'Rules'] + $this->data);
+$this->push('card');
 
 /**
  * @var string $rules
@@ -12,4 +12,4 @@ $v->push('card');
     <div class="text-dark"><?= $rules; ?></div>
 <?php
 
-$v->end();
+$this->end();

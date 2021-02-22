@@ -1,8 +1,12 @@
-<?php $v->layout('layout');
+<?php $this->layout('layout', $this->data);
 
 use App\Models\ChallengeModel; ?>
 
+
+
 <?php
+
+
 /**
  * @var bool $canUpload Is uploading enabled
  * @var ChallengeModel|null $challenge
@@ -36,13 +40,13 @@ $links = [
                     <?php } ?>
                 </ul>
             </div>
-            <div class="card-body text-left"><?= $v->section('card') ?></div>
+            <div class="card-body text-left"><?= $this->section('card') ?></div>
         </div>
 
-        <?= $v->section('after') ?>
+        <?= $this->section('after') ?>
     </div>
 
     <div class="col-lg-4">
-        <?php $v->insert('_log-activity', ['canUpload' => $canUpload, 'challenge' => $challenge]); ?>
+        <?php $this->insert('_log-activity', ['canUpload' => $canUpload, 'challenge' => $challenge] + $this->data); ?>
     </div>
 </div>
