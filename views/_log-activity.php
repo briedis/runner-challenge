@@ -65,9 +65,6 @@ if (!$user->isParticipating) {
                 </div>
                 <small class="form-text text-muted">
                     How to export from
-                    <a href="https://support.endomondo.com/hc/en-us/articles/213219528-File-Export"
-                       rel="nofollow noopener" target="_blank">Endomondo</a>
-                    or
                     <a href="https://support.strava.com/hc/en-us/articles/216918437-Exporting-your-Data-and-Bulk-Export#GPX"
                        rel="nofollow noopener" target="_blank">Strava</a>
                 </small>
@@ -75,7 +72,7 @@ if (!$user->isParticipating) {
             <div class="form-group">
                 <label for="activityUrl">Activity URL:</label>
                 <input type="url" class="form-control" name="activityUrl" id="activityUrl">
-                <small class="form-text text-muted">From your Endomondo or Strava activity page.</small>
+                <small class="form-text text-muted">Strava activity page (only if activity is public).</small>
             </div>
             <div class="form-group">
                 <label for="comment">Short comment (optional):</label>
