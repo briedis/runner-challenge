@@ -121,8 +121,8 @@ class TeamService
             GROUP BY tu.team_id
         ', [$team->id, $team->challengeId]);
 
-        $team->totalDistance = (float)$scores['total_distance'] ?? 0;
-        $team->totalDuration = (float)$scores['total_duration'] ?? 0;
+        $team->totalDistance = (float)($scores['total_distance'] ?? 0);
+        $team->totalDuration = (float)($scores['total_duration'] ?? 0);
         $team->save();
     }
 
