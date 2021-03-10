@@ -88,7 +88,6 @@ class ImageService
     private function preprocessAndSave(ImageModel $model, Image $image)
     {
         $image = $image->orientate();
-        $image->backup();
 
         $constraint = function (Constraint $constraint) {
             $constraint->aspectRatio();
@@ -101,8 +100,6 @@ class ImageService
             $model->getLargeFilename(),
             $image->stream($model->extension, 90)->detach()
         );
-
-        $image->reset();
 
         $image->resize(400, 400, $constraint);
 
