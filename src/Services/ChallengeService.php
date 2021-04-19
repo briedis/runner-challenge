@@ -99,6 +99,13 @@ class ChallengeService
         $challenge->isWalking = true;
         $all[] = $challenge;
 
+        $challenge = new ChallengeModel();
+        $challenge->id = 11;
+        $challenge->openFrom = Carbon::createFromDate(2021, 5, 1, 'Europe/Riga')->setTime(0, 0, 0);
+        $challenge->openUntil = Carbon::createFromDate(2021, 5, 23, 'Europe/Riga')->setTime(23, 59, 59);
+        $challenge->isWalking = true;
+        $all[] = $challenge;
+
         return $all;
     }
 }
