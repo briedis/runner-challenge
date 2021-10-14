@@ -106,6 +106,7 @@ if (!$user->isParticipating) {
             document.getElementById('gpx-form').onsubmit = function () {
                 document.getElementById('gpx-upload-button').setAttribute('disabled', 'true');
                 document.getElementById('gpx-upload-button').classList.add('disabled');
+                document.getElementById('gpx-upload-button').innerHTML = 'Uploading…';
             };
 
             document.getElementById('file-gpx').onchange = function () {
