@@ -93,7 +93,7 @@ if (!$user->isParticipating) {
             </div>
             <?php if ($canUpload) { ?>
                 <div class="text-right">
-                    <button type="submit" class="btn btn-success">Upload</button>
+                    <button id="gpx-upload-button" type="submit" class="btn btn-success">Upload</button>
                 </div>
             <?php } else { ?>
                 <div class="alert alert-danger p-2 text-center mb-0">
@@ -102,9 +102,17 @@ if (!$user->isParticipating) {
             <?php } ?>
         </form>
         <script>
+            // Disable the upload button during submit to prevent accidental double-submits
+            document.getElementById('gpx-form').onsubmit = function () {
+                document.getElementById('gpx-upload-button').setAttribute('disabled', 'true');
+                document.getElementById('gpx-upload-button').classList.add('disabled');
+                document.getElementById('gpx-upload-button').innerHTML = 'Uploading…';
+            };
+
             document.getElementById('file-gpx').onchange = function () {
                 document.getElementById('file-gpx-label').textContent = this.files[0].name;
             };
+
             document.getElementById('file-photo').onchange = function () {
                 document.getElementById('file-photo-label').textContent = this.files[0].name;
             };
