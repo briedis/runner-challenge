@@ -57,7 +57,7 @@ class GpxParser
         /** @var DateTime $maxTime */
         $maxTime = null;
 
-        foreacH ($points as $point) {
+        foreach ($points as $point) {
             if (!$minTime || $minTime->getTimestamp() > $point->time->getTimestamp()) {
                 $minTime = $point->time;
             }

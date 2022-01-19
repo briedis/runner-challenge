@@ -15,7 +15,12 @@ class ChallengeModel
     /** @var Carbon When upload is not open */
     public $openUntil;
 
-    /** @var bool */
+    /**
+     * Walking flag indicates that GPX has to be parsed more carefully,
+     * discarding large distance jumps in a short time, which can occur due to GPS glitches.
+     *
+     * @var bool
+     */
     public $isWalking;
 
     public function isOpen(): bool
