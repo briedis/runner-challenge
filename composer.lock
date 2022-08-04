@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a718c9967ba27f2f7e9cb64417233b50",
+    "content-hash": "41db7f7fc44cffe945bc4736044596cd",
     "packages": [
         {
             "name": "ezyang/htmlpurifier",
@@ -1403,16 +1403,16 @@
         },
         {
             "name": "sibyx/phpgpx",
-            "version": "dev-master",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Sibyx/phpGPX.git",
-                "reference": "ae2fc57617ded987710e22128d94a0c20d4401da"
+                "reference": "9ef1c8efe5e905973d557e821501e5906fe83d48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Sibyx/phpGPX/zipball/ae2fc57617ded987710e22128d94a0c20d4401da",
-                "reference": "ae2fc57617ded987710e22128d94a0c20d4401da",
+                "url": "https://api.github.com/repos/Sibyx/phpGPX/zipball/9ef1c8efe5e905973d557e821501e5906fe83d48",
+                "reference": "9ef1c8efe5e905973d557e821501e5906fe83d48",
                 "shasum": ""
             },
             "require": {
@@ -1423,10 +1423,8 @@
             },
             "require-dev": {
                 "evert/phpdoc-md": "~0.2.0",
-                "friendsofphp/php-cs-fixer": "^2.18",
                 "phpunit/phpunit": "^6.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1447,9 +1445,9 @@
             "description": "A simple PHP library for GPX import/export",
             "support": {
                 "issues": "https://github.com/Sibyx/phpGPX/issues",
-                "source": "https://github.com/Sibyx/phpGPX/tree/1.2.1"
+                "source": "https://github.com/Sibyx/phpGPX/tree/1.1.0"
             },
-            "time": "2022-07-30T20:25:35+00:00"
+            "time": "2021-02-05T12:08:31+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2211,13 +2209,11 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "sibyx/phpgpx": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "8.1|8.0",
+        "php": ">=8.0",
         "ext-json": "*",
         "ext-mbstring": "*"
     },
