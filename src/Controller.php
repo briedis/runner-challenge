@@ -77,33 +77,61 @@ class Controller extends BaseController
             return $this->redirect('board', 'No active challenges.');
         }
 
-        if (empty($_FILES['gpx']['tmp_name'])) {
+        $type = $_POST['type'] ?? '';
+        $isGpx = $type === ActivityUploadTypes::GPX;
+
+        if (!in_array($type, [ActivityUploadTypes::GPX, ActivityUploadTypes::GYM])) {
+            return $this->redirect('board', 'Please select an activity type!');
+        }
+
+        if ($isGpx && empty($_FILES['gpx']['tmp_name'])) {
             return $this->redirect('board', 'Please select a file!');
         }
 
-        $gpxPathname = $_FILES['gpx']['tmp_name'];
+        if ($type === ActivityUploadTypes::GYM && !$this->challenge->allowManualInput) {
+            return $this->redirect('board', 'Only GPX upload is allowed for this challenge!');
+        }
+
+        $gpxPathname = $_FILES['gpx']['tmp_name'] ?? null;
         $photoPathname = $_FILES['photo']['tmp_name'] ?? null;
 
         if ($photoPathname && !is_uploaded_file($photoPathname)) {
             return $this->redirect('board', 'Bad image selected.');
         }
 
-        if (!is_uploaded_file($gpxPathname)) {
+        if ($isGpx && !is_uploaded_file($gpxPathname)) {
             return $this->redirect('board', 'Bad file selected.');
+        }
+
+        if ($type === ActivityUploadTypes::GYM && !$photoPathname) {
+            return $this->redirect('board', 'You need to provide a photo proof when logging a gym activity!');
         }
 
         ini_set('memory_limit', '400M');
 
+
         try {
-            $this->activities->upload(
-                $this->user,
-                $this->challenge,
-                $_FILES['gpx']['name'],
-                $gpxPathname,
-                $_POST['activityUrl'],
-                $_POST['comment'],
-                $photoPathname
-            );
+            if ($isGpx) {
+                $this->activities->upload(
+                    $this->user,
+                    $this->challenge,
+                    $_FILES['gpx']['name'],
+                    $gpxPathname,
+                    $_POST['activityUrl'],
+                    $_POST['comment'],
+                    $photoPathname
+                );
+            } else {
+                $this->activities->uploadGym(
+                    $this->user,
+                    $this->challenge,
+                    $_POST['comment'],
+                    $photoPathname,
+                    (float)str_replace(',', '.', $_POST['distance'] ?? 0),
+                    $_POST['durationHours'] ?? 0,
+                    $_POST['durationMinutes'] ?? 0,
+                );
+            }
         } catch (InvalidArgumentException $e) {
             return $this->redirect('board', $e->getMessage());
         }

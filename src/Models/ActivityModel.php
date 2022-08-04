@@ -20,6 +20,7 @@ class ActivityModel
     /** @var float km/h */
     public $averageSpeed;
     public $maxSpeed;
+    /** @var int Seconds */
     public $duration;
     public $imageId;
     public $activityAt;

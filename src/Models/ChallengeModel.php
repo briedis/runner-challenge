@@ -7,13 +7,13 @@ use Carbon\Carbon;
 class ChallengeModel
 {
     /** @var int */
-    public $id;
+    public int $id;
 
     /** @var Carbon When upload is open */
-    public $openFrom;
+    public Carbon $openFrom;
 
     /** @var Carbon When upload is not open */
-    public $openUntil;
+    public Carbon $openUntil;
 
     /**
      * Walking flag indicates that GPX has to be parsed more carefully,
@@ -21,7 +21,12 @@ class ChallengeModel
      *
      * @var bool
      */
-    public $isWalking;
+    public bool $isWalking;
+
+    /**
+     * Allow providing distance manually
+     */
+    public bool $allowManualInput;
 
     public function isOpen(): bool
     {
