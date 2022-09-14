@@ -30,6 +30,7 @@ $routes->add('impersonate', new Route('/admin/impersonate', ['action' => 'impers
 $routes->add('enable-upload', new Route('/admin/enable-upload', ['action' => 'enableUpload', 'admin' => true]));
 $routes->add('edit-rules', new Route('/admin/edit-rules', ['action' => 'editRules', 'admin' => true]));
 $routes->add('set-participating', new Route('/admin/set-participating', ['action' => 'setParticipating', 'admin' => true]));
+$routes->add('mark-all-as-not-participating', new Route('/admin/set-all-not-participating', ['action' => 'setAllAsNotParticipating', 'admin' => true]));
 $routes->add('reset-password', new Route('/admin/reset-password', ['action' => 'resetPassword', 'admin' => true]));
 $routes->add('announcement', new Route('/announcement', ['action' => 'announcement', 'admin' => true]));
 

@@ -218,4 +218,19 @@ class UserService
 
         return $user->getPasswordResetUrl();
     }
+
+    public function setAllAsNotParticipating(ChallengeModel $challenge)
+    {
+        if ($challenge->openFrom->isPast()) {
+            throw new InvalidArgumentException('Challenge has already started');
+        }
+
+        $participants = array_filter($this->getAll(), function (UserModel $u) {
+            return $u->isParticipating;
+        });
+
+        foreach ($participants as $participant) {
+            $this->setParticipating($challenge, $participant->id, false);
+        }
+    }
 }

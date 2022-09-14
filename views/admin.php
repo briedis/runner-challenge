@@ -47,7 +47,8 @@ $this->layout('layout', ['title' => 'Admin'] + $this->data);
             </div>
             <div class="card-body">
                 <div class="card-columns">
-                    <?php foreach ($teams as $team) { ?>
+                    <?php
+                    foreach ($teams as $team) { ?>
                         <div class="card">
                             <div class="card-header p-1 pl-2">
                                 <?= htmlspecialchars($team->name); ?>
@@ -65,7 +66,8 @@ $this->layout('layout', ['title' => 'Admin'] + $this->data);
                                 } else {
                                     ?>
                                     <ul class="list-group list-group-flush">
-                                        <?php foreach ($teamUsers as $u) { ?>
+                                        <?php
+                                        foreach ($teamUsers as $u) { ?>
                                             <li class="list-group-item p-0">
                                                 <span title="<?= htmlspecialchars($u->email); ?>">
                                                     <?= htmlspecialchars($u->name); ?>
@@ -80,14 +82,16 @@ $this->layout('layout', ['title' => 'Admin'] + $this->data);
                                                     </button>
                                                 </form>
                                             </li>
-                                        <?php } ?>
+                                            <?php
+                                        } ?>
                                     </ul>
                                     <?php
                                 }
                                 ?>
                             </div>
                         </div>
-                    <?php } ?>
+                        <?php
+                    } ?>
                 </div>
 
             </div>
@@ -122,26 +126,32 @@ $this->layout('layout', ['title' => 'Admin'] + $this->data);
             <div class="card-body p-3">
                 <form method="post" action="<?= route('enable-upload'); ?>">
                     <input type="hidden" name="canUpload" value="<?= ((int)!$canUpload); ?>">
-                    <?php if ($canUpload) { ?>
+                    <?php
+                    if ($canUpload) { ?>
                         <p>Activity upload is enabled.</p>
                         <button type="submit" class="btn p-1 btn-danger btn-block">Disable upload</button>
-                        <?php if ($challenge) { ?>
+                        <?php
+                        if ($challenge) { ?>
                             <div class="pt-3">
                                 <small>
                                     From: <?= $challenge->openFrom->format('d.m.Y H:i T'); ?><br>
                                     Until: <?= $challenge->openUntil->format('d.m.Y H:i T'); ?><br>
                                 </small>
                             </div>
-                        <?php } ?>
-                    <?php } else { ?>
+                            <?php
+                        } ?>
+                        <?php
+                    } else { ?>
                         <p>Activity upload is disabled.</p>
                         <button type="submit" class="btn p-1 btn-success btn-block">Enable upload</button>
-                    <?php } ?>
+                        <?php
+                    } ?>
                 </form>
             </div>
         </div>
 
-        <?php $this->insert('admin/_announcement'); ?>
+        <?php
+        $this->insert('admin/_announcement'); ?>
 
         <div class="card mb-3">
             <?php
@@ -156,7 +166,8 @@ $this->layout('layout', ['title' => 'Admin'] + $this->data);
                     ?>
                     <form action="<?= route('assign-team'); ?>" method="post">
                         <ul class="list-group list-group-flush">
-                            <?php foreach ($teamlessUsers as $u) { ?>
+                            <?php
+                            foreach ($teamlessUsers as $u) { ?>
                                 <li class="list-group-item p-1">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" name="userIds[]"
@@ -171,14 +182,18 @@ $this->layout('layout', ['title' => 'Admin'] + $this->data);
                                         </label>
                                     </div>
                                 </li>
-                            <?php } ?>
+                                <?php
+                            } ?>
                         </ul>
                         <select name="teamId" class="custom-select custom-select-sm mt-2">
                             <option value="0">-- Select a team or action --</option>
                             <option value="-1">Set as not participating</option>
-                            <?php foreach ($teams as $team) { ?>
-                                <option value="<?= $team->id; ?>">Add to "<?= htmlspecialchars($team->name); ?>"</option>
-                            <?php } ?>
+                            <?php
+                            foreach ($teams as $team) { ?>
+                                <option value="<?= $team->id; ?>">Add to "<?= htmlspecialchars($team->name); ?>"
+                                </option>
+                                <?php
+                            } ?>
                         </select>
                         <button type="submit" class="btn btn-primary btn-sm btn-block mt-2">Assign to a team
                         </button>
@@ -202,7 +217,8 @@ $this->layout('layout', ['title' => 'Admin'] + $this->data);
                     ?>
                     <form action="<?= route('set-participating'); ?>" method="post">
                         <ul class="list-group list-group-flush">
-                            <?php foreach ($notParticipating as $u) { ?>
+                            <?php
+                            foreach ($notParticipating as $u) { ?>
                                 <li class="list-group-item p-1">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" name="userIds[]"
@@ -216,7 +232,8 @@ $this->layout('layout', ['title' => 'Admin'] + $this->data);
                                         </label>
                                     </div>
                                 </li>
-                            <?php } ?>
+                                <?php
+                            } ?>
                         </ul>
                         <input type="hidden" name="isParticipating" value="1">
                         <button type="submit" class="btn btn-primary btn-sm btn-block mt-2">
@@ -228,6 +245,18 @@ $this->layout('layout', ['title' => 'Admin'] + $this->data);
                 ?>
             </div>
         </div>
+
+        <div class="card mt-3">
+            <div class="card-header">Danger Zone</div>
+            <div class="card-body p-1">
+                <form action="<?= route('mark-all-as-not-participating'); ?>" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm btn-block" onclick="return confirm('Sure? This will move all participants to the not participating list.')">
+                        Set ALL as NOT participating
+                    </button>
+                </form>
+            </div>
+        </div>
+
     </div>
 </div>
 

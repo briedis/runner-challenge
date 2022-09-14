@@ -350,6 +350,17 @@ class Controller extends BaseController
         return $this->redirect('admin', 'Participation status changed');
     }
 
+    public function setAllAsNotParticipating()
+    {
+        try {
+            (new UserService())->setAllAsNotParticipating($this->challenge);
+        } catch (InvalidArgumentException $e) {
+            return $this->redirect('admin', 'Problem encountered: ' . $e->getMessage());
+        }
+
+        return $this->redirect('admin', 'All participants marked as NOT participating');
+    }
+
     public function resetPassword()
     {
         $newPassword = (new UserService())->resetPassword($_POST['userId']);
