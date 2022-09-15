@@ -223,7 +223,12 @@ class Controller extends BaseController
         }
 
         if (!is_ip_whitelisted()) {
-            return $this->redirect('register', 'Registration is not allowed from this IP address');
+            return $this->redirect(
+                'register',
+                'Registration is not allowed from this IP address. Your IP is: ' . htmlspecialchars(
+                    $_SERVER['REMOTE_ADDR'] ?? null
+                )
+            );
         }
 
         try {
