@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Models\GpxStats;
-use Carbon\Carbon;
-use Carbon\CarbonInterface;
 use DateTime;
 use phpGPX\Models\Point;
 use phpGPX\phpGPX;
