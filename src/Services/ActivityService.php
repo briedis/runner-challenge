@@ -50,7 +50,8 @@ class ActivityService
         $content = file_get_contents($pathname);
         $md5 = md5($content);
 
-        if (R::findOne('files', 'md5 = ?', [$md5]) && !getenv('DEBUG') === 'true') {
+        $isDebug = filter_var(getenv('DEBUG'), FILTER_VALIDATE_BOOLEAN);
+        if (R::findOne('files', 'md5 = ?', [$md5]) && !$isDebug) {
             throw new InvalidArgumentException('This activity has already been uploaded');
         }
 
