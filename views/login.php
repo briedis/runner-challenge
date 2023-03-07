@@ -27,10 +27,10 @@
             </div>
             <?php if (!$resetKey) { ?>
                 <div class="form-group">
-                    <label for="name">Your name (if you here the first time):</label>
+                    <label for="name">Your FULL name (if you here the first time):</label>
                     <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp"
                            placeholder="Your name">
-                    <small class="form-text text-muted">Will be visible to others.</small>
+                    <small class="form-text text-muted">You can change your name when you log in and fill this field.</small>
                 </div>
             <?php } ?>
             <input type="hidden" name="resetKey" value="<?= htmlspecialchars($resetKey); ?>">
