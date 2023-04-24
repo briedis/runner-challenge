@@ -26,6 +26,8 @@ class TotalsModel
 
     public $duration;
 
+    public int $ploggingBags = 0;
+
     /** @var ?string */
     public $imageUrl;
 

@@ -1,11 +1,13 @@
 <?php
 
+use App\Models\ChallengeModel;
 use App\Models\TotalsModel;
 
 $this->layout('dashboard', ['title' => 'People'] + $this->data);
 $this->push('card');
 
 /**
+ * @var ChallengeModel $challenge
  * @var TotalsModel[] $totals
  */
 
@@ -18,6 +20,11 @@ $i = 0;
             <th colspan="2" scope="col">Name</th>
             <th scope="col">Distance</th>
             <th scope="col">Activities</th>
+            <?php
+            if ($challenge->isPlogging) { ?>
+                <th scope="col">Bags of Trash</th>
+                <?php
+            } ?>
             <th scope="col">Last Activity</th>
         </tr>
         </thead>
@@ -39,6 +46,11 @@ $i = 0;
                 </td>
                 <td><?= $a->getReadableDistance(); ?></td>
                 <td class="text-center"><?= $a->activityCount; ?></td>
+                <?php
+                if ($challenge->isPlogging) { ?>
+                    <td class="text-center"><?= $a->ploggingBags; ?></td>
+                    <?php
+                } ?>
                 <td><?= $a->getReadableLastActivityAt(); ?></td>
             </tr>
         <?php } ?>

@@ -1,11 +1,13 @@
 <?php
 
+use App\Models\ChallengeModel;
 use App\Models\TotalsModel;
 
 $this->layout('dashboard', ['title' => 'Team Leaderboard'] + $this->data);
 $this->push('card');
 
 /**
+ * @var ChallengeModel $challenge
  * @var TotalsModel[] $totals
  */
 
@@ -18,19 +20,27 @@ $i = 0;
             <th colspan="2" scope="col">Team</th>
             <th scope="col">Distance</th>
             <th scope="col">Activities</th>
+            <?php
+            if ($challenge->isPlogging) { ?>
+                <th scope="col">Bags of Trash</th>
+            <?php
+            } ?>
             <th scope="col">Last Activity</th>
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($totals as $a) { ?>
+        <?php
+        foreach ($totals as $a) { ?>
             <tr>
                 <td class="align-middle"><strong><?= ++$i; ?>.</strong></td>
                 <td class="pt-2 pb-2 pl-0 pr-0">
-                    <?php if ($a->imageUrl) { ?>
+                    <?php
+                    if ($a->imageUrl) { ?>
                         <a href="<?= htmlspecialchars($a->imageUrl); ?>" target="_blank">
                             <img src="<?= htmlspecialchars($a->imageUrl); ?>" class="img-fluid" width="50">
                         </a>
-                    <?php } ?>
+                    <?php
+                    } ?>
                 </td>
                 <td><?= htmlspecialchars($a->teamName); ?></td>
                 <td>
@@ -38,9 +48,15 @@ $i = 0;
                     <?= $a->getReadableDuration(); ?>
                 </td>
                 <td><?= $a->activityCount; ?></td>
+                <?php
+                if ($challenge->isPlogging) { ?>
+                    <td><?= $a->ploggingBags; ?></td>
+                <?php
+                } ?>
                 <td><?= $a->getReadableLastActivityAt(); ?></td>
             </tr>
-        <?php } ?>
+        <?php
+        } ?>
         </tbody>
     </table>
 

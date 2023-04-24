@@ -114,12 +114,15 @@ class TeamService
 
     public function recalculateTeamScore(TeamModel $team)
     {
-        $scores = R::getRow('
+        $scores = R::getRow(
+            '
             SELECT SUM(distance) AS total_distance, SUM(duration) AS total_duration FROM activities a
             JOIN teamsusers tu ON tu.user_id = a.user_id
             WHERE tu.team_id = ? AND a.deleted_at IS NULL AND a.challenge_id = ?
             GROUP BY tu.team_id
-        ', [$team->id, $team->challengeId]);
+        ',
+            [$team->id, $team->challengeId]
+        );
 
         $team->totalDistance = (float)($scores['total_distance'] ?? 0);
         $team->totalDuration = (float)($scores['total_duration'] ?? 0);
@@ -139,7 +142,8 @@ class TeamService
             $sql = 't.id = :teamId';
         }
 
-        $totalsRaw = R::getAll("
+        $totalsRaw = R::getAll(
+            "
             SELECT 
                    u.id, 
                    u.name AS user_name, 
@@ -148,7 +152,8 @@ class TeamService
                    SUM(distance) AS total_distance, 
                    SUM(duration) AS total_duration, 
                    MAX(a.activity_at) AS last_activity_at,
-                   COUNT(a.id) AS activity_count
+                   COUNT(a.id) AS activity_count,
+                   SUM(a.plogging_bags) AS plogging_bags
             FROM users u
             LEFT JOIN activities a ON a.user_id = u.id AND a.deleted_at IS NULL AND a.challenge_id = :challengeId
             LEFT JOIN teamsusers tu ON tu.user_id = u.id AND tu.challenge_id = :challengeId
@@ -158,7 +163,9 @@ class TeamService
                    AND u.is_participating = 1
             GROUP BY u.id
             ORDER BY total_distance DESC
-        ", $bindings);
+        ",
+            $bindings
+        );
 
         return $this->parseTotals($totalsRaw);
     }
@@ -173,7 +180,8 @@ class TeamService
             return [];
         }
 
-        $totalsRaw = R::getAll("
+        $totalsRaw = R::getAll(
+            "
             SELECT 
                    u.id, 
                    t.id AS team_id,
@@ -183,7 +191,8 @@ class TeamService
                    SUM(distance) AS total_distance, 
                    SUM(duration) AS total_duration, 
                    MAX(a.activity_at) AS last_activity_at,
-                   COUNT(a.id) AS activity_count
+                   COUNT(a.id) AS activity_count,
+                   SUM(a.plogging_bags) AS plogging_bags
             FROM users u
             LEFT JOIN activities a ON a.user_id = u.id AND a.deleted_at IS NULL AND a.challenge_id = :challengeId
             JOIN teamsusers tu ON tu.user_id = u.id AND tu.challenge_id = :challengeId
@@ -191,9 +200,11 @@ class TeamService
             WHERE u.is_participating = 1 
             GROUP BY t.id
             ORDER BY total_distance DESC
-        ", [
-            'challengeId' => $challenge->id,
-        ]);
+        ",
+            [
+                'challengeId' => $challenge->id,
+            ]
+        );
 
         return $this->parseTotals($totalsRaw);
     }
@@ -240,6 +251,7 @@ class TeamService
             $t->duration = (int)$r['total_duration'];
             $t->lastActivityAt = (int)$r['last_activity_at'];
             $t->activityCount = (int)$r['activity_count'];
+            $t->ploggingBags = (int)$r['plogging_bags'];
             if ($r['team_image_id']) {
                 $t->imageUrl = route('image') . '?id=' . $r['team_image_id'];
             }
