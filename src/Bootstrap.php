@@ -79,7 +79,7 @@ class Bootstrap
 
     private function registerErrorHandlers()
     {
-        error_reporting(E_ALL | ~E_NOTICE);
+        error_reporting((E_ALL | ~E_NOTICE) & ~E_DEPRECATED);
 
         set_error_handler(
             function ($severity, $message, $file, $line) {

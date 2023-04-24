@@ -22,7 +22,9 @@ class ActivityService
         string $pathname,
         string $activityUrl,
         string $comment,
-        ?string $photoPathname
+        ?string $photoPathname,
+        ?int $ploggingBags,
+        ?string $ploggingPhotoPathname,
     ): bool {
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
@@ -36,10 +38,7 @@ class ActivityService
             );
         }
 
-        $imageId = null;
-        if ($photoPathname) {
-            $imageId = (new ImageService())->upload($photoPathname, 'images')->id;
-        }
+        $imageId = $photoPathname ? $this->getPhotoId($photoPathname) : null;
 
         try {
             $gpxStats = (new GpxParser())->parse($pathname, (bool)$challenge->isWalking);
@@ -71,6 +70,11 @@ class ActivityService
         $activity->createdAt = time();
         $activity->deletedAt = null;
 
+        if ($challenge->isPlogging && $ploggingBags && $ploggingPhotoPathname) {
+            $activity->ploggingBags = $ploggingBags;
+            $activity->ploggingImageId = $this->getPhotoId($ploggingPhotoPathname);
+        }
+
         $activity->save();
 
         $teamUser = TeamUserModel::findOneByChallenge($user->id, $challenge->id);
@@ -82,6 +86,11 @@ class ActivityService
         $this->notifyAboutActivity($user, $activity, $team);
 
         return true;
+    }
+
+    private function getPhotoId(string $pathname): int
+    {
+        return (new ImageService())->upload($pathname, 'images')->id;
     }
 
     public function uploadGym(

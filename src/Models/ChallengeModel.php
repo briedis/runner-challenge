@@ -28,6 +28,9 @@ class ChallengeModel
      */
     public bool $allowManualInput;
 
+    /** Enable plogging logging */
+    public bool $isPlogging = false;
+
     public function isOpen(): bool
     {
         return $this->openFrom->isPast() && $this->openUntil->isFuture();

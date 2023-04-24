@@ -27,6 +27,11 @@ class ActivityModel
     public $createdAt;
     public $deletedAt;
 
+    /** How many shopping bags of trash were gathered */
+    public ?int $ploggingBags = null;
+    /** Proof for plogging gathered bags */
+    public ?int $ploggingImageId = null;
+
     public static function fromBean(OODBBean $bean): ActivityModel
     {
         $m = new self;
@@ -45,6 +50,8 @@ class ActivityModel
         $m->activityAt = $bean->activityAt;
         $m->createdAt = $bean->created_at;
         $m->deletedAt = $bean->deleted_at;
+        $m->ploggingBags = (int)$bean->plogging_bags ?: null;
+        $m->ploggingImageId = (int)$bean->plogging_image_id ?: null;
 
         return $m;
     }
@@ -81,6 +88,8 @@ class ActivityModel
         $bean->activity_at = $this->activityAt;
         $bean->created_at = $this->createdAt;
         $bean->deleted_at = $this->deletedAt;
+        $bean->plogging_bags = $this->ploggingBags;
+        $bean->plogging_image_id = $this->ploggingImageId;
 
         $this->id = R::store($bean);
     }
@@ -123,6 +132,14 @@ class ActivityModel
     {
         if ($this->imageId) {
             return ImageModel::getById($this->imageId);
+        }
+        return null;
+    }
+
+    public function getPloggingImage(): ?ImageModel
+    {
+        if ($this->ploggingImageId) {
+            return ImageModel::getById($this->ploggingImageId);
         }
         return null;
     }

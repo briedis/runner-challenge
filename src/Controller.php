@@ -107,6 +107,18 @@ class Controller extends BaseController
             return $this->redirect('board', 'You need to provide a photo proof when logging a gym activity!');
         }
 
+        $ploggingBags = (int)($_POST['plogging-bags'] ?? 0);
+        $ploggingPhotoPathname = (string)($_FILES['plogging-photo']['tmp_name'] ?? '');
+        if ($this->challenge->isPlogging && $ploggingBags) {
+            if ($ploggingBags < 0 || $ploggingBags > 100) {
+                return $this->redirect('board', 'Check the provided shopping bag count, something is off.');
+            }
+
+            if (!$ploggingPhotoPathname || !is_uploaded_file($ploggingPhotoPathname)) {
+                return $this->redirect('board', 'Please provide a photo proof for plogging.');
+            }
+        }
+
         ini_set('memory_limit', '400M');
 
 
@@ -119,7 +131,9 @@ class Controller extends BaseController
                     $gpxPathname,
                     $_POST['activityUrl'],
                     $_POST['comment'],
-                    $photoPathname
+                    $photoPathname,
+                    $ploggingBags,
+                    $ploggingPhotoPathname
                 );
             } else {
                 $this->activities->uploadGym(

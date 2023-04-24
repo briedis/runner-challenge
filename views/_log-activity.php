@@ -66,7 +66,7 @@ if (!$user->isParticipating) {
                 <a href="javascript:" onclick="setWorkoutType('gym');" id="js--btn-gym"
                    class="btn btn-block btn-outline-secondary mt-2">Gym Workout<br>(distance and duration)</a>
             </div>
-        <?php
+            <?php
         }
         ?>
         <form action="<?= route('upload'); ?>" method="post" enctype="multipart/form-data" id="gpx-form">
@@ -95,8 +95,8 @@ if (!$user->isParticipating) {
             </div>
             <?php
             if ($challenge->allowManualInput) { ?>
-            <div class="p-3 mt-3 d-none" id="js--form-gym"
-                 style="border:1px solid #cccccc;">
+                <div class="p-3 mt-3 d-none" id="js--form-gym"
+                     style="border:1px solid #cccccc;">
                     <h5>Manually enter the distance (Gym workout)</h5>
                     <div class="form-group">
                         <label for="distance">Distance in <u>kilometers</u>:</label>
@@ -131,7 +131,7 @@ if (!$user->isParticipating) {
                             </div>
                         </div>
                     </div>
-            </div>
+                </div>
                 <?php
             } ?>
             <div class="p-3 mt-3 mb-3" style="border:1px solid #cccccc;">
@@ -155,6 +155,33 @@ if (!$user->isParticipating) {
                 </div>
             </div>
             <?php
+            if ($challenge->isPlogging) { ?>
+                <div class="p-3 mt-3 mb-3" style="border:1px solid #cccccc;">
+                    <h5 class="d-flex justify-content-between align-items-baseline">
+                        <span>Plogging</span>
+                        <span class="small">Optional</span>
+                    </h5>
+                    <div class="form-group">
+                        <label for="plogging-bags">Gathered amount in shopping bags:</label>
+                        <input type="number" step="1" min="1" value="0" class="form-control" name="plogging-bags" id="plogging-bags">
+                        <small class="form-text text-muted"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="plogging-photo">
+                            Upload a photo of proof
+                            (optional, max size <?= Storage::getMaxUploadSize(); ?>M):
+                        </label>
+                        <div class="custom-file overflow-hidden">
+                            <input type="file" class="custom-file-input" name="plogging-photo" id="plogging-photo">
+                            <label class="custom-file-label" id="plogging-photo-label" for="plogging-photo">
+                                Select a photo...
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
             if ($canUpload) { ?>
                 <div class="text-right">
                     <button id="gpx-upload-button" type="submit" class="btn btn-success btn-block">Log Activity</button>
@@ -192,6 +219,10 @@ if (!$user->isParticipating) {
 
             document.getElementById('file-photo').onchange = function () {
                 document.getElementById('file-photo-label').textContent = this.files[0].name;
+            };
+
+            document.getElementById('plogging-photo').onchange = function () {
+                document.getElementById('plogging-photo-label').textContent = this.files[0].name;
             };
 
             function setWorkoutType(type) {
