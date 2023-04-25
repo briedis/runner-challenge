@@ -8,6 +8,7 @@ use App\Services\TextService;
 use App\Services\UserService;
 use Carbon\Carbon;
 use InvalidArgumentException;
+use Throwable;
 
 class Controller extends BaseController
 {
@@ -378,6 +379,17 @@ class Controller extends BaseController
         }
 
         return $this->redirect('admin', 'All participants marked as NOT participating');
+    }
+
+    public function randomlyAssignAll()
+    {
+        try {
+            (new UserService())->assignAllUsersToRandomTeams($this->challenge);
+        } catch (Throwable $e) {
+            return $this->redirect('admin', $e->getMessage());
+        }
+
+        return $this->redirect('admin', 'All participants assigned to random teams!');
     }
 
     public function resetPassword()

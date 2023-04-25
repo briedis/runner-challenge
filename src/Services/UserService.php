@@ -10,6 +10,8 @@ use RedBeanPHP\R;
 
 class UserService
 {
+    private const DEFAULT_TEAM_SIZE = 5;
+
     public function register($email, $password, $name): UserModel
     {
         $email = trim(mb_strtolower($email));
@@ -232,5 +234,40 @@ class UserService
         foreach ($participants as $participant) {
             $this->setParticipating($challenge, $participant->id, false);
         }
+    }
+
+    public function assignAllUsersToRandomTeams(ChallengeModel $challenge): bool
+    {
+        if ($challenge->openFrom->isPast()) {
+            throw new InvalidArgumentException('Challenge has already started');
+        }
+
+        $participants = array_filter($this->getAll(), function (UserModel $u) {
+            return $u->isParticipating;
+        });
+
+        // Filter out any users already assigned to a team
+        $assigned = TeamUserModel::findAllByChallenge($challenge->id);
+        $assignedUserIds = array_map(fn (TeamUserModel $u) => $u->userId, $assigned);
+        $unassigned = array_filter($participants, function (UserModel $u) use ($assignedUserIds) {
+            return !in_array($u->id, $assignedUserIds);
+        });
+
+        if (empty($unassigned)) {
+            throw new InvalidArgumentException('There are no unassigned participants!');
+        }
+
+        shuffle($unassigned);
+
+        $teamsService = new TeamService();
+        $teamSize = getenv('DEFAULT_TEAM_SIZE') ?: self::DEFAULT_TEAM_SIZE;
+        $numOfTeams = round(count($unassigned) / $teamSize, 1);
+
+        for ($i = 0; $i < $numOfTeams; $i++) {
+            $team = $teamsService->addTeam($challenge);
+            $teamsService->assignUsers($team, array_slice($unassigned, $i * $teamSize, $teamSize));
+        }
+
+        return true;
     }
 }

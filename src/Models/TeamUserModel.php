@@ -91,4 +91,14 @@ class TeamUserModel
         }
         return null;
     }
+
+    public static function findAllByChallenge(int $challengeId): array
+    {
+        $bean = R::findAll(self::TABLE, 'challenge_id = ?', [$challengeId]);
+        if (!$bean) {
+            return [];
+        }
+
+        return array_map(fn ($b) => self::fromBean($b), $bean);
+    }
 }

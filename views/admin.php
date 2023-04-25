@@ -255,6 +255,13 @@ $this->layout('layout', ['title' => 'Admin'] + $this->data);
                     </button>
                 </form>
             </div>
+            <div class="card-body p-1">
+                <form action="<?= route('randomly-assign-all'); ?>" method="post">
+                    <button type="submit" class="btn btn-warning btn-sm btn-block" onclick="return confirm('Sure? This will assign all participating users to random teams.')">
+                        Assign all participating users to random teams
+                    </button>
+                </form>
+            </div>
         </div>
 
     </div>
