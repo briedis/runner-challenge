@@ -170,7 +170,7 @@ if (!$user->isParticipating) {
                     <div class="form-group">
                         <label for="plogging-photo">
                             Upload a photo of proof
-                            (optional, max size <?= Storage::getMaxUploadSize(); ?>M):
+                            (max size <?= Storage::getMaxUploadSize(); ?>M):
                         </label>
                         <div class="custom-file overflow-hidden">
                             <input type="file" class="custom-file-input" name="plogging-photo" id="plogging-photo">
