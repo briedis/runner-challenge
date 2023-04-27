@@ -87,7 +87,7 @@ class Bootstrap
             }
         );
 
-        if (getenv('DEBUG') === 'true') {
+        if (filter_var(getenv('DEBUG'), FILTER_VALIDATE_BOOLEAN)) {
             ini_set('display_errors', 1);
             (new Run())->appendHandler(new PrettyPageHandler())->register();
         } else {
