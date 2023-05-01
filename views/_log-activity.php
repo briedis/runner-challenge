@@ -156,14 +156,14 @@ if (!$user->isParticipating) {
             </div>
             <?php
             if ($challenge->isPlogging) { ?>
-                <div class="p-3 mt-3 mb-3" style="border:1px solid #cccccc;">
+                <div id="js--block-plogging" class="p-3 mt-3 mb-3 d-none" style="border:1px solid #cccccc;">
                     <h5 class="d-flex justify-content-between align-items-baseline">
                         <span>Plogging</span>
                         <span class="small">Optional</span>
                     </h5>
                     <div class="form-group">
                         <label for="plogging-bags">Gathered amount in shopping bags:</label>
-                        <input type="number" step="1" min="1" value="0" class="form-control" name="plogging-bags" id="plogging-bags">
+                        <input type="number" step="1" min="0" value="0" class="form-control" name="plogging-bags" id="plogging-bags">
                         <small class="form-text text-muted"></small>
                     </div>
 
@@ -230,11 +230,13 @@ if (!$user->isParticipating) {
                 const btnGym = document.getElementById('js--btn-gym');
                 const formGpx = document.getElementById('js--form-gpx');
                 const formGym = document.getElementById('js--form-gym');
+                const blockPlogging = document.getElementById('js--block-plogging');
 
                 inputUploadType.value = type;
 
                 btnGpx.classList.remove('btn-primary');
                 btnGym.classList.remove('btn-primary');
+                blockPlogging.classList.remove('d-none');
 
                 formGpx.classList.remove('d-none');
                 formGym.classList.remove('d-none');
@@ -242,10 +244,12 @@ if (!$user->isParticipating) {
                 if (type === 'gpx') {
                     btnGpx.classList.add('btn-primary');
                     formGym.classList.add('d-none');
+                    blockPlogging.classList.remove('d-none');
                 }
                 if (type === 'gym') {
                     btnGym.classList.add('btn-primary');
                     formGpx.classList.add('d-none');
+                    blockPlogging.classList.add('d-none');
                 }
             }
         </script>
