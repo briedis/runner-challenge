@@ -44,7 +44,7 @@ class ActivityService
         try {
             $gpxStats = (new GpxParser())->parse($pathname, (bool)$challenge->isWalking);
         } catch (Throwable $e) {
-            Bootstrap::$logger->warning('GPX parsing error: ' . $e->getMessage(), ['user' => $user->email]);
+            Bootstrap::$logger->error('GPX parsing error: ' . $e->getMessage(), ['user' => $user->email]);
             throw new InvalidArgumentException('The activity file could not be read.');
         }
 
