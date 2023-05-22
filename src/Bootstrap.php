@@ -20,6 +20,7 @@ use Whoops\Run;
 class Bootstrap
 {
     public static UrlGenerator $routeGenerator;
+    public static Logger $logger;
 
     public function run()
     {
@@ -100,5 +101,7 @@ class Bootstrap
         $log->pushHandler(new StreamHandler(__DIR__ . '/../storage/app.log', Logger::ERROR));
 
         ErrorHandler::register($log);
+
+        self::$logger = $log;
     }
 }

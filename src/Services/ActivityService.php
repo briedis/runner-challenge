@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Bootstrap;
 use App\Models\ActivityModel;
 use App\Models\ChallengeModel;
 use App\Models\TeamModel;
@@ -43,6 +44,7 @@ class ActivityService
         try {
             $gpxStats = (new GpxParser())->parse($pathname, (bool)$challenge->isWalking);
         } catch (Throwable $e) {
+            Bootstrap::$logger->warning('GPX parsing error: ' . $e->getMessage(), ['user' => $user->email]);
             throw new InvalidArgumentException('The activity file could not be read.');
         }
 
