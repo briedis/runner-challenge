@@ -144,6 +144,15 @@ class ChallengeService
         $challenge->allowManualInput = true;
         $all[] = $challenge;
 
+        $challenge = new ChallengeModel();
+        $challenge->id = 17;
+        $challenge->openFrom = Carbon::createFromDate(2023, 10, 1, 'Europe/Riga')->setTime(0, 0, 0);
+        $challenge->openUntil = Carbon::createFromDate(2023, 10, 31, 'Europe/Riga')->setTime(23, 59, 59);
+        $challenge->isWalking = true;
+        $challenge->isPlogging = true;
+        $challenge->allowManualInput = true;
+        $all[] = $challenge;
+
         return $all;
     }
 }
