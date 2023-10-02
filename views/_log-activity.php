@@ -163,7 +163,8 @@ if (!$user->isParticipating) {
                     </h5>
                     <div class="form-group">
                         <label for="plogging-bags">Gathered amount in shopping bags:</label>
-                        <input type="number" step="1" min="0" value="0" class="form-control" name="plogging-bags" id="plogging-bags">
+                        <input type="number" step="1" min="0" value="0" class="form-control" name="plogging-bags"
+                               id="plogging-bags">
                         <small class="form-text text-muted"></small>
                     </div>
 
@@ -221,9 +222,11 @@ if (!$user->isParticipating) {
                 document.getElementById('file-photo-label').textContent = this.files[0].name;
             };
 
-            document.getElementById('plogging-photo').onchange = function () {
-                document.getElementById('plogging-photo-label').textContent = this.files[0].name;
-            };
+            if (document.getElementById('plogging-photo')) {
+                document.getElementById('plogging-photo').onchange = function () {
+                    document.getElementById('plogging-photo-label').textContent = this.files[0].name;
+                };
+            }
 
             function setWorkoutType(type) {
                 const btnGpx = document.getElementById('js--btn-gpx');
