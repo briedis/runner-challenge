@@ -199,6 +199,7 @@ if (!$user->isParticipating) {
         <script>
             const inputUploadType = document.getElementById('js--type');
             const inputFile = document.getElementById('file-photo');
+            const inputPlogging = document.getElementById('plogging-photo');
 
             // Disable the upload button during submit to prevent accidental double-submits
             document.getElementById('gpx-form').onsubmit = function () {
@@ -222,8 +223,8 @@ if (!$user->isParticipating) {
                 document.getElementById('file-photo-label').textContent = this.files[0].name;
             };
 
-            if (document.getElementById('plogging-photo')) {
-                document.getElementById('plogging-photo').onchange = function () {
+            if (inputPlogging) {
+                inputPlogging.onchange = function () {
                     document.getElementById('plogging-photo-label').textContent = this.files[0].name;
                 };
             }
@@ -239,7 +240,7 @@ if (!$user->isParticipating) {
 
                 btnGpx.classList.remove('btn-primary');
                 btnGym.classList.remove('btn-primary');
-                blockPlogging.classList.remove('d-none');
+                blockPlogging?.classList.remove('d-none');
 
                 formGpx.classList.remove('d-none');
                 formGym.classList.remove('d-none');
@@ -247,12 +248,12 @@ if (!$user->isParticipating) {
                 if (type === 'gpx') {
                     btnGpx.classList.add('btn-primary');
                     formGym.classList.add('d-none');
-                    blockPlogging.classList.remove('d-none');
+                    blockPlogging?.classList.remove('d-none');
                 }
                 if (type === 'gym') {
                     btnGym.classList.add('btn-primary');
                     formGpx.classList.add('d-none');
-                    blockPlogging.classList.add('d-none');
+                    blockPlogging?.classList.add('d-none');
                 }
             }
         </script>
